@@ -15,8 +15,31 @@
     <!-- Так добавляются фрагменты в главные HTML-файлы страниц. -->
     <!-- <include src="./partials/example.html"></include> -->
     <script>
+      let data= null;
       let socket = new WebSocket('wss://stream.cryptowat.ch/connect?apikey=LV9GGGV72JSICRHIX81W');
-      console.log(socket.readyState);
+      
+      socket.onopen = function (event) {
+        console.log(socket.readyState);
+        const option = {
+                          "subscribe": {
+                            "subscriptions": [
+                              {
+                                "streamSubscription": {
+                                  "resource": "instruments:9:trades"
+                                }
+                              },
+                              
+                            ]
+                          }
+                        }
+                        socket.send(JSON.stringify(option));
+        
+};
+socket.onmessage = function(event) {
+  data = event.data.text().then(
+  
+  )
+};
     </script>
 
     <script src="./index.js"></script>
